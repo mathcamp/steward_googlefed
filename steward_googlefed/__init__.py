@@ -96,11 +96,13 @@ def do_logout(request):
 def on_login(request):
     """ Called when a user successfully logs in """
     context = request.context
-    email, domain = context.profile['verifiedEmail'].split('@')
-    if domain == request.registry.settings.get('steward.googlefed.domain'):
+    email_addr = context.profile['verifiedEmail']
+    email, domain = email_addr.split('@')
+    my_domain = request.registry.settings.get('googlefed.domain')
+    if domain == my_domain:
         request.session['username'] = email
     else:
-        LOG.warning("Email domain %s does not match!", domain)
+        LOG.warning("Email '%s' does not match '%s'!", email_addr, my_domain)
 
     next_url = request.session.pop('next', _get_app_root(request))
     raise HTTPFound(location=next_url)
