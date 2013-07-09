@@ -1,2 +1,2 @@
 include *.txt *.ini *.cfg *.rst
-recursive-include steward *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml *.jinja2
+recursive-include steward_googlefed *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml *.jinja2
