@@ -149,7 +149,4 @@ def includeme(config):
     config.add_google_hybrid_login(attrs=['email'],
                                 realm=settings.get('velruse.google.realm'))
 
-    config.add_route('login', '/login')
-    config.add_route('logout', '/logout')
-
     config.scan()
