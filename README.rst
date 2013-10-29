@@ -1,18 +1,21 @@
 Steward Googlefed
 =================
 This is a Steward extension for using Google Federated Auth for a web
-interface. This extension only supplies the auth, not the rest of the web
-interface.
+interface. This extension requires ``steward_web`` and replaces the built-in
+username/password login system.
 
 Setup
 =====
 To use ``steward_googlefed``, just add it to your includes either programmatically::
 
+    config.include('steward_web')
     config.include('steward_googlefed')
 
 or in the config.ini file::
 
-    pyramid.includes = steward_googlefed
+    pyramid.includes =
+        steward_web
+        steward_googlefed
 
 Configuration
 =============
@@ -33,11 +36,22 @@ be coming from when doing the OpenID auth with Google. For example::
 
     velruse.google.realm = https://myapp.com
 
+You will also need to tell ``steward_web`` to disable the basic login system
+that it uses, otherwise it will conflict::
+
+    steward.web.basic_login = false
+
 Internal Settings
 -----------------
+::
 
-* **googlefed.domain** - The domain that is given access to Steward. The auth will ensure that the Google-verified email fits the format <username>@<domain>
-* **googlefed.all_admin** - If true, add everyone that logs in via Google to the 'admin' group. Useful for debugging.
+    # The domain that is given access to Steward. The auth will ensure that the
+    # Google-verified email fits the format <username>@<domain>
+    googlefed.domain = <your_domain>
+
+    # If true, add everyone that logs in via Google to the 'admin' group.
+    # Useful for debugging and small teams.
+    googlefed.all_admin = false
 
 Authorization in Steward works by using the standard Pyramid user + group +
 permission model. Steward requires you to set up a list of users and what
@@ -57,8 +71,3 @@ the user 'stevearc', add the setting::
 
 You may add as many 'googlefed.user' settings as you wish. If the email
 username is not found in the user map, it is left unconverted.
-
-.. note::
-    Your Steward web interface should define a route with the name 'root'. If
-    it does not, steward_googlefed will just use '/' instead of doing url
-    lookup when redirecting users on login/logout.
