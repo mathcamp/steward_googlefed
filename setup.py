@@ -10,7 +10,7 @@ CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
 
 REQUIREMENTS = [
     'steward',
-    'velruse',
+    'velruse>=1.1', #  Stateless OpenID mode was fixed in 1.1
     'pyramid_beaker',
 ]
 

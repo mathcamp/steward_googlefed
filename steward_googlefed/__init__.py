@@ -143,10 +143,7 @@ def includeme(config):
     config.set_session_factory(session_factory_from_settings(settings))
 
     config.include('velruse.providers.google_hybrid')
-    # This is a hack to run openid in stateless mode. See:
-    # https://github.com/bbangert/velruse/pull/117
-    velruse.providers.openid.OpenIDConsumer.openid_store = None
     config.add_google_hybrid_login(attrs=['email'],
-                                realm=settings.get('velruse.google.realm'))
+                                   realm=settings['velruse.google.realm'])
 
     config.scan()
